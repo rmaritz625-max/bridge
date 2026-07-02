@@ -4682,7 +4682,7 @@ function AgentDashboard({vesselRegistry, enquiries, setEnquiries, role, showToas
       const p = vessel.profile;
       if(!p.isActive||!p.agentVisible||!p.isCharterEnabled) continue;
       // Block vessels below profile completion threshold
-      if(calcProfileScore(p, activeVessel?.rules).pct < PROFILE_THRESHOLD) continue;
+      if(calcProfileScore(p, vessel.rules).pct < PROFILE_THRESHOLD) continue;
       // Vessel name filter
       if(search.vesselName) {
         if(!p.yachtName?.toLowerCase().includes(search.vesselName.toLowerCase())) continue;
@@ -4796,8 +4796,9 @@ function AgentDashboard({vesselRegistry, enquiries, setEnquiries, role, showToas
         </div>
       </div>
       <button onClick={runSearch} style={{...btn,background:C.brass,color:C.bg,width:"100%",padding:"11px 0",fontWeight:800,fontSize:14}}>
-        {"Search Yachts"}
+        {Object.values(search).every(v=>!v) ? "Search All Yachts" : "Search Yachts"}
       </button>
+      <div style={{fontSize:10,color:C.muted,textAlign:"center",marginTop:6}}>{"Leave fields blank to browse every available yacht"}</div>
     </div>
 
     {/* Results */}
